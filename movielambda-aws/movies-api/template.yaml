@@ -1,0 +1,113 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  movies-api
+
+  Sample SAM Template for movies-api
+
+Globals:
+  Function:
+    Runtime: python3.10  
+    Timeout: 30
+    Environment: 
+      Variables: 
+        MOVIES_TABLE: !Ref MoviesTable
+
+Resources:
+  MoviesTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: Number
+
+
+  CreateMovieFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: movies_api/
+      Handler: create.lambda_handler
+      Runtime: python3.10
+      Architectures:
+      - x86_64
+      Events:
+        CreateMovie:
+          Type: Api
+          Properties:
+            Path: /movie
+            Method: POST
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref MoviesTable       
+
+  ReadMovieFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: movies_api/
+      Handler: read.lambda_handler
+      Runtime: python3.10
+      Architectures:
+      - x86_64
+      Events:
+        ReadMovie:
+          Type: Api
+          Properties:
+            Path: /movie/{id}
+            Method: GET
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref MoviesTable       
+
+  ReadAllMovieFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: movies_api/
+      Handler: readall.lambda_handler
+      Runtime: python3.10
+      Architectures:
+      - x86_64
+      Events:
+        ReadMovie:
+          Type: Api
+          Properties:
+            Path: /movie/
+            Method: GET
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref MoviesTable 
+
+  UpdateMovieFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: movies_api/
+      Handler: update.lambda_handler
+      Runtime: python3.10
+      Architectures:
+      - x86_64
+      Events:
+        ReadMovie:
+          Type: Api
+          Properties:
+            Path: /movie/{id}
+            Method: PATCH
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref MoviesTable  
+
+  DeleteMovieFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: movies_api/
+      Handler: delete.lambda_handler
+      Runtime: python3.10
+      Architectures:
+      - x86_64
+      Events:
+        ReadMovie:
+          Type: Api
+          Properties:
+            Path: /movie/{id}
+            Method: DELETE
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref MoviesTable                     
