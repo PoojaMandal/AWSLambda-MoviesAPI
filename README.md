@@ -16,5 +16,15 @@ Amazon API Gateway
 Amazon DynamoDB
 RESTful API design principles
 Python 
-![Screenshot 2024-04-28 155301](https://github.com/PoojaMandal/AWSLambda-MoviesAPI/assets/63387928/e2a2c902-99a8-49a9-a0bf-3496b315de69)
+--Create movie
+![Screenshot 2024-04-28 153342](https://github.com/PoojaMandal/AWSLambda-MoviesAPI/assets/63387928/6829bfa5-be62-47ce-97a1-d78a831006fa)
+
+--Get single movie by id
+![Screenshot 2024-04-28 155301](https://github.com/PoojaMandal/AWSLambda-MoviesAPI/assets/63387928/db8c0d78-67f1-4ae0-a724-c79283e493c6)
+
+--Get list of all movies
+![Screenshot 2024-04-28 163928](https://github.com/PoojaMandal/AWSLambda-MoviesAPI/assets/63387928/debf74c5-efd0-46bd-9e66-f9a44567282f)
+
+
+
 
